@@ -4,7 +4,6 @@
 #include <algorithm>
 #include <cstring>
 
-
 bool Image::OpenImageFiles()
 {
     struct dirent *entry;
