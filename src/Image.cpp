@@ -22,7 +22,7 @@ bool Image::OpenImageFiles()
         std::string img_fn(entry->d_name);
         std::string full_path = getParamStr("input_dir") + "/" + entry->d_name;
         in_files.push_back(full_path);
-        std::cout << full_path << std::endl;
+        // std::cout << "Image::OpenImageFiles : " << full_path << std::endl;
     }
     sort(in_files.begin(), in_files.end());
     closedir(dir);
