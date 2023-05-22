@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _PARAMETER_H_
+#define _PARAMETER_H_
+// #pragma once
 
 #include <unordered_map>
 #include <iostream>
@@ -81,3 +83,5 @@ public:
 private:
     std::unordered_map<std::string, boost::variant<int, std::string>> params;
 };
+
+#endif
