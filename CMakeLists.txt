@@ -3,7 +3,7 @@ project(ImageManager)
 
 find_package(OpenCV REQUIRED)
 
-include_directories(include ${OpenCV_INCLUDE_DIRS})
+include_directories(${PROJECT_SOURCE_DIR}/include ${OpenCV_INCLUDE_DIRS})
 
 set(EXCLUDE_PATHS
     "CMakeFiles"
