@@ -8,20 +8,25 @@ ImageManager::ImageManager()
     //     openDir(fn);
     // }
 }
+int ImageManager::initImageModule()
+{
+    std::shared_ptr<Image> objImage = std::make_shared<Image>(vec_Images.size());
+    vec_Images.push_back(objImage);
+    return vec_Images.size() - 1;
+}
+int ImageManager::openFiles(int id, std::string dir_name)
+{
+    if(id >= vec_Images.size())
+        return -1;
+    vec_Images[id]->insertParam("input_dir", dir_name);
+    if(vec_Images[id]->OpenImageFiles())
+        return id;
+    return -1;
+}
 std::shared_ptr<Image> ImageManager::getImageModule(int idx)
 {
     if(idx >= vec_Images.size())
         return NULL;
     return vec_Images[idx];
 }
-int ImageManager::openFiles(std::string dir_name)
-{
-    std::shared_ptr<Image> objImage = std::make_shared<Image>(vec_Images.size());
-    objImage->insertParam("input_dir", dir_name);
-    if(objImage->OpenImageFiles())
-    {
-        vec_Images.push_back(objImage);
-        return vec_Images.size() - 1;
-    }
-    return -1;
-}
+
