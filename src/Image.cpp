@@ -33,10 +33,16 @@ bool Image::OpenImageFiles()
 cv::Mat Image::getImageMat(int idx)
 {
     cv::Mat empty;
+    if(cur_file == in_files[idx])
+        return cur_img;
     if (idx < in_files.size())
-        return cv::imread(in_files[idx]);
-
-    return empty;
+    {
+        cur_file = in_files[idx];
+        cur_img = cv::imread(in_files[idx]);
+        return cur_img;
+    }
+    else
+        return empty;
 }
 int Image::getImageFilesSize()
 {

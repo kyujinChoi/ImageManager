@@ -13,8 +13,11 @@ class Image : public Parameter
         bool OpenImageFiles();
         int getImageFilesSize();
         cv::Mat getImageMat(int idx);
+        std::string getVecFiles(int idx) { return in_files[idx];};
     private:
         std::unordered_map<std::string, boost::variant<int , std::string>> params;
         int img_idx = 0;
+        std::string cur_file;
+        cv::Mat cur_img;
         std::vector<std::string> in_files;
 };
