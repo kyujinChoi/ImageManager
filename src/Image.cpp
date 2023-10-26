@@ -4,6 +4,21 @@
 #include <algorithm>
 #include <cstring>
 
+cv::Mat Image::getCurImageMat()
+{
+    mtx.lock();
+    int result = img_idx;
+    mtx.unlock();
+    
+    return vec_mat[result];
+}
+void Image::pushImageMat(cv::Mat img)
+{
+    mtx.lock();
+    vec_mat[++img_idx % IMG_MAX_CNT] = img;
+    mtx.unlock();
+    return;
+}
 int Image::openFiles(std::string dir_name, std::string format)
 {   
     insertParam("input_dir", dir_name);
@@ -34,13 +49,14 @@ int Image::openFiles(std::string dir_name, std::string format)
 cv::Mat Image::getImageMat(int idx)
 {
     cv::Mat empty;
-    if(cur_file == vec_files[idx])
-        return cur_img;
-    if (idx < vec_files.size())
+    
+    if(img_idx == idx)
+        return vec_mat[img_idx];
+    if (idx < vec_mat.size())
     {
         cur_file = vec_files[idx];
-        cur_img = cv::imread(vec_files[idx]);
-        return cur_img;
+        vec_mat[img_idx] = cv::imread(vec_files[idx]);
+        return vec_mat[img_idx];
     }
     else
         return empty;
