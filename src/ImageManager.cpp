@@ -14,19 +14,19 @@ int ImageManager::initImageModule()
     vec_Images.push_back(objImage);
     return vec_Images.size() - 1;
 }
-int ImageManager::openFiles(int id, std::string dir_name)
-{
-    if(id >= vec_Images.size())
-        return -1;
-    vec_Images[id]->insertParam("input_dir", dir_name);
-    if(vec_Images[id]->OpenImageFiles())
-        return id;
-    return -1;
-}
+// int ImageManager::openFiles(int id, std::string dir_name)
+// {
+//     if(id >= vec_Images.size())
+//         return -1;
+//     vec_Images[id]->insertParam("input_dir", dir_name);
+//     if(vec_Images[id]->OpenImageFiles())
+//         return id;
+//     return -1;
+// }
 std::shared_ptr<Image> ImageManager::getImageModule(int idx)
 {
-    if(idx >= vec_Images.size())
-        return NULL;
-    return vec_Images[idx];
+    if(idx >= 0 && idx < vec_Images.size())
+        return vec_Images[idx];
+    return NULL;
 }
 

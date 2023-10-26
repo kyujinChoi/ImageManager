@@ -4,11 +4,12 @@
 #include <algorithm>
 #include <cstring>
 
-bool Image::OpenImageFiles()
-{
+int Image::openFiles(std::string dir_name, std::string format)
+{   
+    insertParam("input_dir", dir_name);
     struct dirent *entry;
 
-    DIR *dir = opendir(getParamStr("input_dir").c_str());
+    DIR *dir = opendir(dir_name.c_str());
 
     if (dir == NULL)
     {
@@ -21,31 +22,28 @@ bool Image::OpenImageFiles()
             continue;
         std::string img_fn(entry->d_name);
         std::string full_path = getParamStr("input_dir") + "/" + entry->d_name;
-        in_files.push_back(full_path);
+        vec_files.push_back(full_path);
         // std::cout << "Image::OpenImageFiles : " << full_path << std::endl;
     }
-    sort(in_files.begin(), in_files.end());
+    sort(vec_files.begin(), vec_files.end());
     closedir(dir);
 
-    return true;
+    return vec_files.size();
 }
 
 cv::Mat Image::getImageMat(int idx)
 {
     cv::Mat empty;
-    if(cur_file == in_files[idx])
+    if(cur_file == vec_files[idx])
         return cur_img;
-    if (idx < in_files.size())
+    if (idx < vec_files.size())
     {
-        cur_file = in_files[idx];
-        cur_img = cv::imread(in_files[idx]);
+        cur_file = vec_files[idx];
+        cur_img = cv::imread(vec_files[idx]);
         return cur_img;
     }
     else
         return empty;
 }
-int Image::getImageFilesSize()
-{
-    return in_files.size();
-}
+
 
