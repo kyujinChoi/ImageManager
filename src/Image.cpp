@@ -50,13 +50,12 @@ cv::Mat Image::getImageMat(int idx)
 {
     cv::Mat empty;
     
-    if(img_idx == idx)
-        return vec_mat[img_idx];
+    if(!vec_mat[idx].empty() && img_idx == idx)
+        return vec_mat[idx];
     if (idx < vec_mat.size())
     {
-        cur_file = vec_files[idx];
-        vec_mat[img_idx] = cv::imread(vec_files[idx]);
-        return vec_mat[img_idx];
+        pushImageMat(cv::imread(vec_files[idx]));
+        return getCurImageMat();
     }
     else
         return empty;
